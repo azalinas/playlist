@@ -1,0 +1,38 @@
+{
+  "name": "playlist",
+  "private": true,
+  "version": "0.0.219",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "format-and-lint": "biome check .",
+    "format-and-lint:fix": "biome check . --write",
+    "preview": "vite preview",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "clsx": "^2.0.0",
+    "hash-slash": "^0.2.3",
+    "jazz-inspector": "^0.14.21",
+    "jazz-react": "^0.14.21",
+    "jazz-tools": "^0.14.21",
+    "lucide-react": "^0.274.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "zod": "3.25.28"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
+    "@vitejs/plugin-react-swc": "^3.10.1",
+    "autoprefixer": "^10.4.20",
+    "is-ci": "^3.0.1",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.4.17",
+    "typescript": "5.6.2",
+    "vite": "6.3.5"
+  }
+}
