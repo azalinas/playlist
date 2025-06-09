@@ -1,5 +1,5 @@
 import { apiKey } from "@/apiKey.ts";
-import { getRandomUsername, inIframe, onPlaylistLoad } from "@/util.ts";
+import { getRandomUsername, inIframe } from "@/util.ts";
 import { useIframeHashRouter } from "hash-slash";
 import { JazzInspector } from "jazz-inspector";
 import { JazzProvider, useAccount } from "jazz-react";
@@ -26,26 +26,17 @@ export function App() {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     }, group);
-    router.navigate("/#/" + playlist.id);
+    // router.navigate("/#/" + playlist.id);
 
-    // for https://jazz.tools marketing site demo only
-    onPlaylistLoad(playlist);
+         playlist.waitForSync().then(() => {
+       router.navigate("/#/" + playlist.id);
+     });
   };
 
   return (
     <AppContainer>
       <TopBar>
-        <input
-          type="text"
-          value={me?.profile?.name ?? ""}
-          className="bg-transparent"
-          onChange={(e) => {
-            if (!me?.profile) return;
-            me.profile.name = e.target.value;
-          }}
-          placeholder="Set username"
-        />
-        {!inIframe && <button onClick={logOut}>Log out</button>}
+        {!inIframe && <button onClick={() => router.navigate("/")}>New Playlist</button>}
       </TopBar>
       {router.route({
         "/": () => createPlaylist() as never,
@@ -55,8 +46,8 @@ export function App() {
   );
 }
 
-const url = new URL(window.location.href);
-const defaultProfileName = url.searchParams.get("user") ?? getRandomUsername();
+// const url = new URL(window.location.href);
+// const defaultProfileName = url.searchParams.get("user") ?? getRandomUsername();
 
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider>
@@ -65,7 +56,7 @@ createRoot(document.getElementById("root")!).render(
         sync={{
           peer: `wss://cloud.jazz.tools/?key=${apiKey}`,
         }}
-        defaultProfileName={defaultProfileName}
+        // defaultProfileName={defaultProfileName}
       >
         <App />
         <JazzInspector />
