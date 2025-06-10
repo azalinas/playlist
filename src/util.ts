@@ -1,21 +1,20 @@
-// This is only for demo purposes for https://jazz.tools
-// This is NOT needed to make the chat work
+import { PlaylistItem } from "./schema";
 
-export const inIframe = window.self !== window.top;
+export function extractType(content: string): Partial<PlaylistItem> {
+  const match = content.match(/https?:\/\/(www\.)?([^\s]+)/)
 
-const animals = [
-  "elephant",
-  "penguin",
-  "giraffe",
-  "octopus",
-  "kangaroo",
-  "dolphin",
-  "cheetah",
-  "koala",
-  "platypus",
-  "pangolin",
-];
+  if (match) {
+    const url = new URL(match[0]);
+    const domain = url.hostname.replace(/^www\./, '');
 
-export function getRandomUsername() {
-  return `Anonymous ${animals[Math.floor(Math.random() * animals.length)]}`;
+    if (["youtube.com", "youtu.be"].includes(domain)) {
+      return { type: "youtube", url: match[0] };
+    } else if (["twitter.com", "x.com"].includes(domain)) {
+      return { type: "twitter", url: match[0] };
+    } else {
+      return { type: "link", url: match[0] };
+    }
+  }
+  
+  return { type: "text", content: content };
 }
