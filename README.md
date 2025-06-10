@@ -1,49 +1,63 @@
-# Playlist Tool
+# Chat example with Jazz and React
 
-This project provides a simple playlist web app written entirely in TypeScript.
-The backend is an Express server and the frontend is a React application
-bundled with `esbuild`.
+Live version: [https://chat.jazz.tools](https://chat.jazz.tools)
 
-## Getting Started
+## Getting started
 
-1. **Install dependencies**
-   ```bash
-   npm install --prefix backend
-   npm install --prefix frontend
-   ```
+You can either
+1. Clone the jazz repository, and run the app within the monorepo.
+2. Or create a new Jazz project using this example as a template.
 
-2. **Create configuration**
-   Copy `.env.example` to `.env` and fill in your Cloudflare R2 credentials if
-   you plan to upload files. (Uploads are not implemented yet.)
 
-3. **Build the frontend**
-   ```bash
-   npm run build --prefix frontend
-   ```
+### Using the example as a template
 
-4. **Start the server**
-   ```bash
-   npm run build --prefix backend
-   node backend/dist/server.js
-   ```
-   The server serves the compiled frontend from `frontend/dist` on port `3000`.
+Create a new Jazz project, and use this example as a template.
+```bash
+npx create-jazz-app@latest chat-app --example chat
+```
 
-5. **Open the app**
-   Navigate to `http://localhost:3000`. A new playlist will be created
-   automatically and you will be redirected to a URL like `/p/abc123`.
-   Share that URL to allow others to view and edit the playlist.
+Go to the new project directory.
+```bash
+cd chat-app
+```
 
-## Features
+Run the dev server.
+```bash
+npm run dev
+```
 
-- Add any content via a link or uploaded file placeholder
-- Reorder items using arrow buttons
-- Check off items you've viewed (stored in `localStorage`)
-- Add optional notes for each item
-- Playlists are saved in `backend/db.json` for simplicity
+### Using the monorepo
 
-## Development Notes
+This requires `pnpm` to be installed, see [https://pnpm.io/installation](https://pnpm.io/installation).
 
-The frontend is written with React and TypeScript and bundled using
-`esbuild`. The backend is a small Express server that stores playlists in a
-JSON file. Feel free to enhance the code with authentication, proper file
-uploads, or a real database.
+Clone the jazz repository.
+```bash
+git clone https://github.com/garden-co/jazz.git
+```
+
+Install and build dependencies.
+```bash
+pnpm i && npx turbo build
+```
+
+Go to the example directory.
+```bash
+cd jazz/examples/chat/
+```
+
+Start the dev server.
+```bash
+pnpm dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
+
+## Questions / problems / feedback
+
+If you have feedback, let us know on [Discord](https://discord.gg/utDMjHYg42) or open an issue or PR to fix something that seems wrong.
+
+## Configuration: sync server
+
+By default, the example app uses [Jazz Cloud](https://jazz.tools/cloud) (`wss://cloud.jazz.tools`) - so cross-device use, invites and collaboration should just work.
+
+You can also run a local sync server by running `npx jazz-run sync`, and setting the `sync` parameter of `JazzProvider` in [./src/app.tsx](./src/app.tsx) to `{ peer: "ws://localhost:4200" }`.
