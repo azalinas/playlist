@@ -1,5 +1,4 @@
 import { apiKey } from "@/apiKey.ts";
-import { getRandomUsername, inIframe } from "@/util.ts";
 import { useIframeHashRouter } from "hash-slash";
 import { JazzInspector } from "jazz-inspector";
 import { JazzProvider, useAccount } from "jazz-react";
@@ -9,10 +8,9 @@ import { createRoot } from "react-dom/client";
 import { PlaylistScreen } from "./playlistScreen.tsx";
 import { Playlist, PlaylistItemsList } from "./schema.ts";
 import { ThemeProvider } from "./themeProvider.tsx";
-import { AppContainer, TopBar } from "./ui.tsx";
 
 export function App() {
-  const { me, logOut } = useAccount();
+  const { me } = useAccount();
   const router = useIframeHashRouter();
 
   const createPlaylist = () => {
@@ -34,20 +32,17 @@ export function App() {
   };
 
   return (
-    <AppContainer>
-      <TopBar>
-        {!inIframe && <button onClick={() => router.navigate("/")}>New Playlist</button>}
-      </TopBar>
+    <div>
+      <div>
+        <button onClick={() => router.navigate("/")}>New Playlist</button>
+      </div>
       {router.route({
         "/": () => createPlaylist() as never,
         "/:id": (id) => <PlaylistScreen playlistID={id} />,
       })}
-    </AppContainer>
+    </div>
   );
 }
-
-// const url = new URL(window.location.href);
-// const defaultProfileName = url.searchParams.get("user") ?? getRandomUsername();
 
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider>
