@@ -1,4 +1,4 @@
-import { co, z, CoMapSchema } from "jazz-tools";
+import { co, z } from "jazz-tools";
 
 // Base fields that all playlist items share
 const BaseItemFields = {

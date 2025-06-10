@@ -8,10 +8,9 @@ import { createRoot } from "react-dom/client";
 import { PlaylistScreen } from "./playlistScreen.tsx";
 import { Playlist, PlaylistItemsList } from "./schema.ts";
 import { ThemeProvider } from "./themeProvider.tsx";
-import { AppContainer, TopBar } from "./ui.tsx";
 
 export function App() {
-  const { me, logOut } = useAccount();
+  const { me } = useAccount();
   const router = useIframeHashRouter();
 
   const createPlaylist = () => {

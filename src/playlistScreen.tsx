@@ -1,6 +1,4 @@
-import { createImage, useAccount, useCoState } from "jazz-react";
-import { ProgressiveImg } from "jazz-react";
-import { co } from "jazz-tools";
+import { useCoState } from "jazz-react";
 import { useState } from "react";
 import { 
   Playlist, 
@@ -8,16 +6,10 @@ import {
   ContentTypes,
 } from "./schema.ts";
 import {
-  AppContainer,
-  TopBar,
-  ChatBody,
   InputBar,
-  ImageInput,
-  TextInput,
 } from "./ui.tsx";
 import { 
   PlayIcon, 
-  Music2Icon, 
   TwitterIcon,
   ImageIcon, 
   FileTextIcon, 
@@ -33,7 +25,7 @@ export function PlaylistScreen(props: { playlistID: string }) {
   const playlist = useCoState(Playlist, props.playlistID, {
     resolve: { items: { $each: true } },
   });
-  const { me } = useAccount();
+  // const { me } = useAccount();
   const [addItemType, setAddItemType] = useState<PlaylistItem["type"]>("text");
 
   if (!playlist) {
@@ -245,8 +237,6 @@ function ItemTypeIcon({ type }: { type: PlaylistItem["type"] }) {
 }
 
 function AddItemForm({ 
-  itemType, 
-  onTypeChange, 
   onSubmit,
 }: {
   itemType: PlaylistItem["type"];
